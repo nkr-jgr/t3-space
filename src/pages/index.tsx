@@ -4,9 +4,9 @@ import Link from "next/link";
 
 import { api } from "~/utils/api";
 
-export default function Home() {
+export default function Home(props) {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
+  const data = api.posts.getAll.useQuery();
   return (
     <>
       <Head>
@@ -48,6 +48,11 @@ export default function Home() {
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
             </p>
             <AuthShowcase />
+          </div>
+          <div>
+            {data.data?.map((post) => (
+              <div key={post.id}>{post.content}</div>
+            ))}
           </div>
         </div>
       </main>
